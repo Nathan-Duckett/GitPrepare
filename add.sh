@@ -1,6 +1,7 @@
 #/bin/sh
 
 read -p "Github Personal Access Token: " PAT
+read -p "Your name for the account: " name
 read -p "Email Address for account: " email
 key_path="$HOME/.ssh/id_rsa"
 
@@ -15,3 +16,7 @@ ssh-add $key_path
 curl -X POST -H "Authorization: token $PAT" \
  --data "{\"title\":\"$(hostname)\",\"key\":\"$(cat $key_path.pub)\"}" \
  https://api.github.com/user/keys
+
+# Set git globals
+git config --global user.email $email
+git config --global user.name $name
